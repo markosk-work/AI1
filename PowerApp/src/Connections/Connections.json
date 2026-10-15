@@ -1,0 +1,29 @@
+﻿{
+  "944fe6fd-d493-4fc6-97c8-beee52aacb15": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "bypassConsent": true,
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1625/1.0.1625.3226/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://contoso.sharepoint.com/sites/HR": {
+        "dataSources": {
+          "Employees": {
+            "tableName": "Employees"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "Employees"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "944fe6fd-d493-4fc6-97c8-beee52aacb15"
+  }
+}
+

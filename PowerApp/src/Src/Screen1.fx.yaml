@@ -1,0 +1,50 @@
+Screen1 As screen:
+    Fill: =RGBA(255, 255, 255, 1)
+
+    lblEmployee As label:
+        Height: =32
+        Text: ="Employee (type to search by Full Name)"
+        Width: =500
+        X: =40
+        Y: =30
+        ZIndex: =1
+
+    cmbEmployee As combobox:
+        DisplayFields: =["Full Name"]
+        Height: =40
+        Items: =Filter(Employees, StartsWith('Full Name', cmbEmployee.SearchText))
+        SearchFields: =["Full Name"]
+        SelectMultiple: =false
+        Width: =500
+        X: =40
+        Y: =66
+        ZIndex: =2
+
+    lblComment As label:
+        Height: =32
+        Text: ="Comment"
+        Width: =500
+        X: =40
+        Y: =130
+        ZIndex: =3
+
+    comment As text:
+        Default: =If(IsBlank(cmbEmployee.Selected), "", cmbEmployee.Selected.comment)
+        Height: =40
+        HintText: ="Write a comment"
+        Width: =500
+        X: =40
+        Y: =166
+        ZIndex: =4
+
+    btnSave As button:
+        DisplayMode: =If(IsBlank(cmbEmployee.Selected), DisplayMode.Disabled, DisplayMode.Edit)
+        Height: =40
+        OnSelect: |-
+            =Patch(Employees, LookUp(Employees, ID = cmbEmployee.Selected.ID), {comment: comment.Text});
+            Notify("Comment saved for " & cmbEmployee.Selected.'Full Name', NotificationType.Success)
+        Text: ="Update comment"
+        Width: =200
+        X: =40
+        Y: =230
+        ZIndex: =5
