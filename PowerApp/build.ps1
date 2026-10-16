@@ -117,7 +117,7 @@ $files = @{
     <UniqueName>EmployeeCommentEditor</UniqueName>
     <LocalizedNames><LocalizedName description="Employee Comment Editor" languagecode="1033" /></LocalizedNames>
     <Descriptions />
-    <Version>1.0.0.0</Version>
+    <Version>1.0.1.0</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>employeecommentpub</UniqueName>
