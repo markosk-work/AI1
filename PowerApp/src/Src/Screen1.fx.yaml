@@ -11,12 +11,12 @@ Screen1 As screen:
 
     cmbEmployee As combobox:
         DefaultSelectedItems: =Filter(Employees, false)
-        DisplayFields: =["Full Name", "Title"]
+        DisplayFields: =["Full_x0020_Name", "Title"]
         Height: =40
-        Items: =Filter(Employees, StartsWith('Full Name', Self.SearchText) || StartsWith(Title, Self.SearchText))
+        Items: =Filter(Employees, StartsWith('Full Name', cmbEmployee.SearchText) || StartsWith(Title, cmbEmployee.SearchText))
         OnChange: =Reset(comment)
-        SearchFields: =["Full Name", "Title"]
-        SearchItems: =Filter(Employees, StartsWith('Full Name', Self.SearchText) || StartsWith(Title, Self.SearchText))
+        SearchFields: =["Full_x0020_Name", "Title"]
+        SearchItems: =Filter(Employees, StartsWith('Full Name', cmbEmployee.SearchText) || StartsWith(Title, cmbEmployee.SearchText))
         SelectMultiple: =false
         Width: =500
         X: =40
