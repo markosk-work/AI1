@@ -1,0 +1,17 @@
+{
+  "description": "At session start in a project folder (one with .claude/pp-project.yaml): fast-forwards the project's workspace repo (no sign-in prompts, at most 8 s) and points the session at the project's shared memory and its newest log entries. Prints nothing anywhere else.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/hooks/session-start.sh\"",
+            "timeout": 20
+          }
+        ]
+      }
+    ]
+  }
+}

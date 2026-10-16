@@ -1,0 +1,6 @@
+# <project>/.gitattributes - the project's workspace repo (see skill pp-project-config). LF in every checkout, so a
+# copy synced between Windows (core.autocrlf=true) and macOS does not show every file as changed.
+* text=auto eol=lf
+# The memory index: when two people add lines at the same time, a merge or rebase keeps both instead of a conflict
+# (skill pp-project-memory - check it for a doubled line afterwards).
+memory/MEMORY.md merge=union

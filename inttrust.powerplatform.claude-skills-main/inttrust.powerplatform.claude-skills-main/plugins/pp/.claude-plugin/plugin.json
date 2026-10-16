@@ -1,0 +1,16 @@
+{
+  "name": "pp",
+  "description": "How InTTrust builds Power Platform apps: SQL, Power Automate, Power Fx, release, testing, PROD diagnosis, per-project configuration and shared project memory",
+  "version": "1.2.1",
+  "author": {
+    "name": "InTTrust S.A. - Power Platform team"
+  },
+  "repository": "https://inttrust-sa.ghe.com/Development/inttrust.powerplatform.claude-skills",
+  "keywords": [
+    "power-platform",
+    "power-apps",
+    "power-automate",
+    "sql",
+    "dataverse"
+  ]
+}

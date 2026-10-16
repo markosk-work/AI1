@@ -1,0 +1,113 @@
+# <project>/.claude/pp-project.yaml - shared project facts for the pp-* skills (see skill pp-project-config).
+# Safe to share with teammates on this project. Never put passwords, tokens, secrets or connection strings here.
+# Paths are relative to the project folder (the folder that contains this .claude folder), which is a clone of the
+# project's workspace repo (repos.workspace) - this file is committed there.
+schema: 1
+
+project:
+  name: <Project name>
+  summary: <one line - what the app does and its stack>
+  style_profile: none          # telework | gaslog | surveys | none (then style_notes, or derive from the code)
+  style_notes: null            # optional project-local file with this codebase's conventions, e.g. .claude/pp-style.md
+  docs: []                     # project documents to read before changes that touch data, flows or permissions (e.g. docs/Architecture.md)
+  memory: memory               # shared project memory: Claude's auto memory of the project, MEMORY.md + one file per memory (skill pp-project-memory)
+  log: log                     # team log, log/YYYY/YYYY-MM-DD-<slug>.md, append-only history (skill pp-project-memory)
+
+# Everyone the rules may need to ask or tell. Keys are short ids used under roles:.
+people:
+  <key>:
+    name: <Full name>
+    email: <upn>
+    language: en               # language for messages to this person (e.g. el for Greek)
+    notes: null                # how this person works / wants messages, e.g. "one page, actions only"
+
+# Roles the skills refer to. Value = a key of people:, or null when unknown (then ask the lead).
+roles:
+  lead: <key>                  # decides scope, go-aheads, publishing
+  db_owner: null               # owns the database and its SQL repo
+  prod_owner: null             # PROD database changes, PROD imports, PROD connection mapping
+  sp_approver: null            # approves a new stored procedure before it is built
+  devops_admin: null           # repo access, renames, permissions, extensions, pipelines in Azure DevOps / GitHub
+  env_admin: null              # environment security roles, app sharing, app-data access for a new person
+  release_runner: null         # runs QA/PROD release scripts
+  business_owner: null         # signs off user-facing wording and business rules (for example HR)
+# Values: null = unknown (ask the lead); none = deliberately nothing.
+
+# Repos: this folder itself (workspace) and the code repos cloned inside it. Key = role of the repo.
+repos:
+  workspace:                   # this folder: CLAUDE.md, AGENTS.md, this file, memory/, log/, docs/ (tools/ only when its scripts take every value as a parameter) - allow-list .gitignore
+    path: .
+    remote: <clone URL of the project's workspace repo, e.g. https://inttrust-sa.ghe.com/Development/<Company>-<App>.git>
+    branch: main
+    kind: workspace
+    commit_policy: ask         # memory and log: push after the user's "yes commit and push"; CLAUDE.md, AGENTS.md, this file: the lead decides
+    new_files: allowed         # in memory/, log/ and docs/; anything else ask
+    owner: lead
+  app:
+    path: <folder>
+    remote: <clone URL>
+    branch: main
+    kind: dataverse-git        # dataverse-git (Power Platform native Git integration) | pac-unpacked | sql | deployment | workspace | other
+    solution_folder: null      # e.g. Root/<SolutionUniqueName>
+    commit_policy: ask         # pr (feature branch + PR, merge commit) | ask (only on explicit request) | never (owner commits) | direct
+    new_files: ask             # allowed | ask | never
+    owner: null                # role that owns the repo history, e.g. db_owner
+    notes: null
+  # sql:        { path: ..., kind: sql, commit_policy: never, new_files: never, owner: db_owner, ddl_file: ... }
+  # deployment: { path: ..., kind: deployment, commit_policy: ask, release_script: ... }
+
+solution:
+  unique_name: <SolutionUniqueName>
+  display_name: null
+  solution_id: null
+  publisher: null
+  canvas_apps:
+    - name: <logical name>     # e.g. prefix_appname_12345
+      display_name: null
+      app_id: null
+      src: null                # path to the unpacked Src folder
+  environment_switch_var: null # env var whose value "Production" turns on real behaviour (mail to real people, ...)
+  feature_switch_vars: []      # per-feature on/off env vars
+  env_var_values_in_git: false # values are set per environment, never committed
+
+environments:
+  dev:
+    name: <display name>
+    env_id: <guid>
+    url: https://<org>.crm4.dynamics.com
+    tenant_id: null
+    managed: false
+    app_users_team: null       # Dataverse team that app flows must be shared with (Read)
+    notes: null
+  # qa:   { ... }
+  # prod: { env_id: ..., url: ..., managed: true, owner: prod_owner, flow_owner_account: ..., app_users_teams: [...] }
+
+databases:
+  dev:
+    server: <server>.database.windows.net
+    database: <name>
+    auth: entra                # entra | sql-login
+    network: null              # e.g. "Azure SQL firewall - office network or VPN"
+    notes: null                # e.g. "test data, but holds real e-mail addresses"
+  # prod: { server: null, database: ..., owner: prod_owner }
+
+rules:
+  default_target: dev
+  prod: explicit instruction for each action
+  new_stored_procedure: approval by sp_approver first
+  no_prod_changes_on: []       # e.g. [Thursday]
+  prod_import_days: []         # e.g. [Monday, Tuesday, Wednesday]
+  licensing: null              # e.g. "standard licences only - no premium connectors in the app"
+  new_feature: null            # e.g. "separate flow + String env var switch, default 'false', value per environment"
+  mobile_parity: false         # true = every UI change must also work on the phone layout
+  mail_outside_production: test allowlist only (local config)
+
+tests:
+  sql_harness: null            # path to a rolled-back test harness, if any
+  pa_yaml_known_unresolved: null   # the app's list of legitimately unresolvable names for pp-powerfx's check-pa-yaml.mjs --known
+
+telemetry:
+  app_insights: null           # resource names / app ids and who can read them
+  flow_runs: Dataverse table flowruns on the environment (28-day TTL)
+
+related_skills: []             # project-only skills, if a project truly has one (usually none)

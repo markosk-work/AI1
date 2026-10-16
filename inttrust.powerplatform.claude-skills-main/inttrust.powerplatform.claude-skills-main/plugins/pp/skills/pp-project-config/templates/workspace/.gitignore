@@ -1,0 +1,44 @@
+# <project>/.gitignore - the project's workspace repo (see skill pp-project-config). An allow-list: everything at the
+# top level is ignored, then only what the team shares is let back in. The code repos cloned inside this folder,
+# fix-* folders, exports, PDFs and scratch files stay out without being listed.
+/*
+!/.gitignore
+!/.gitattributes
+!/README.md
+!/CLAUDE.md
+!/AGENTS.md
+!/memory/
+!/log/
+!/docs/
+!/.claude/
+/.claude/*
+!/.claude/pp-project.yaml
+# Not shared: .claude/settings.json and .claude/skills/ (hooks, permissions and tools would reach every teammate's
+# machine unreviewed at their next session start), and tools/ unless its scripts take every value as a parameter -
+# add !/tools/ back only then.
+
+# Never shared, not even inside the folders above: personal files, raw data, run logs, token caches, OS files.
+*.local.*
+CLAUDE.local.md
+logs/
+*.log
+*.csv
+*.json
+*.xlsx
+*.xls
+*.har
+*.msapp
+*.bak
+*.zip
+*.dpapi
+*.dat
+*.cache
+*.pfx
+*.pem
+*.key
+.env
+*.env
+.DS_Store
+desktop.ini
+Thumbs.db
+~$*

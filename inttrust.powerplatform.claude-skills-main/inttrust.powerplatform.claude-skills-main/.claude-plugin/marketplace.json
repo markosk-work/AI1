@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "inttrust",
+  "description": "InTTrust S.A. Claude Code plugins",
+  "owner": {
+    "name": "InTTrust S.A. - Power Platform team"
+  },
+  "plugins": [
+    {
+      "name": "pp",
+      "description": "How InTTrust builds Power Platform apps: SQL, Power Automate, Power Fx, release, testing, PROD diagnosis, per-project configuration and shared project memory",
+      "author": {
+        "name": "InTTrust S.A. - Power Platform team"
+      },
+      "source": "./plugins/pp",
+      "category": "development"
+    }
+  ]
+}

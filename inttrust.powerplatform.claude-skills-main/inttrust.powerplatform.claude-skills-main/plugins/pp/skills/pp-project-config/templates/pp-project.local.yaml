@@ -1,0 +1,30 @@
+# <project>/.claude/pp-project.local.yaml - YOUR identities and tools for this project (see skill pp-project-config).
+# Personal: never share it, never commit it. If the project folder is shared with others, keep this file at
+# %USERPROFILE%\.claude\pp-projects\<project name>.local.yaml instead.
+# No passwords, tokens or secrets - only account names and paths. Values: null = unknown (ask), none = deliberately nothing.
+schema: 1
+
+me:
+  key: null                    # your key under people in pp-project.yaml (null if you are not listed)
+  name: <Full name>
+  email: <upn>
+
+# Which identity to use for what. Verify each one yourself, from page or CLI evidence, before privileged actions.
+accounts:
+  dev_maker: null              # maker portal, Studio, source-control pane, flows, Dataverse Web API in DEV
+  prod_admin: null             # PROD admin actions - only on an explicit instruction; you type passwords, Claude never does. none = no PROD access
+  sql: null                    # Entra account for the DEV database
+  plain_user_test: null        # an ordinary (non-admin) account for runtime tests, if you have one
+  git: {}                      # one entry per host in repos.*.remote, e.g. { dev.azure.com: you@company.com }
+
+browser_profiles: {}           # Chrome profile name -> signed-in account, e.g. { "Work - maker": maker@company.com }
+pac_profiles: {}               # e.g. { dev: MyProject-DEV } - never rely on whichever pac profile happens to be active
+
+tools:                         # helper scripts (paths relative to the project folder); never print what they return
+  sql_token_cache: null        # DPAPI refresh-token file for pp-sql scripts/Get-SqlToken.ps1, e.g. '%LOCALAPPDATA%\<Project>\db-refresh.dpapi'
+  dataverse_token: null        # optional project helper for Dataverse tokens
+
+network: null                  # e.g. "DEV SQL only from the office network or VPN"
+
+safety:
+  test_email_allowlist: []     # the only mailboxes test mail may reach - your own

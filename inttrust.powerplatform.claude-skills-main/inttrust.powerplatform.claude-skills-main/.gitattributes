@@ -1,0 +1,2 @@
+# Hook scripts run under sh on Windows (Git Bash) and macOS: keep LF even where core.autocrlf is true.
+*.sh text eol=lf

@@ -1,0 +1,127 @@
+I read the README, all eight `SKILL.md` files and `pa-yaml-editing.md`. I did not open the per-project `references\*.md` files (gaslog, surveys, telework), the templates or the scripts, so those are classified from their names. Classification:
+
+
+## (a) Claude-specific, not useful to me
+
+
+
+- **Plugin packaging:** `.claude-plugin\*.json`, the `/plugin marketplace add` and `/plugin install` install prompts, auto-update settings, and "Change a skill" (bump the version in `plugin.json`).
+
+- **Session mechanics:** `hooks\session-start.sh` and `hooks.json`, `autoMemoryDirectory` and `settings.local.json`, `CLAUDE.md` and `CLAUDE.local.md`, and `/memory`.
+
+- **`pp-project-memory`:** the memory and log mechanics, which are Claude's auto memory shared through a repo.
+
+- **Claude in Chrome:** the `Show-ChromeTab.ps1` tab-focus tricks from `pp-test-verify`, and `maker-portal-automation.md`, which drives Studio from a browser.
+
+- **Frontmatter:** the SKILL frontmatter and trigger descriptions.
+
+
+
+## (b) Company DevOps, where I can only suggest
+
+
+
+- **`pp-project-config`:** roles (lead, DB owner, PROD owner, SP approver), `pp-project.yaml`, the GitHub Enterprise `inttrust-sa.ghe.com` workspace repos, and who approves or deploys what.
+
+- **`pp-release`:**
+
+- DEV is the default target and PROD needs explicit instruction, with the PROD owner doing the import.
+
+- Merged, pulled, published and what users run are four different states.
+
+- Versions must be strictly higher than the target's, packages are named by version, and a SHA-256 is recorded for each.
+
+- Scripted imports check `pac org who` first.
+
+- Flow state and sharing must be checked after every import.
+
+- Fix forward on managed PROD, and keep a PROD hand-off page for the owner.
+
+- Project scripts: `Export-Import-Solution.ps1`, `MakeSurveys.ps1`, `dataverse-git.md`.
+
+- **`pp-sql` (process side):** the master DDL file, SP approver sign-off, commit policy "never" on owner repos, the diff-live-then-apply procedure, grants, `Get-SqlToken.ps1` and `Invoke-Sql.ps1`, and firewalls.
+
+- **`pp-test-verify`:** the e-mail test allowlist, DEV-only fixtures, and the PARTIAL reporting rule.
+
+- **`pp-prod-diagnosis`:** App Insights, `flowruns`, Query Store and who acts.
+
+- **`pp-flows`:** environment switch variables, designer-made siblings as the reference, git-authored flows arriving Off, sharing with the app users' team, and the run-history gateway tricks.
+
+
+
+## (c) Good practices, useful to me
+
+
+**Power Fx and canvas** (`pp-powerfx`):
+
+
+
+- Use App.Formulas for named constants, `Type()` definitions and pure functions, with no `Set`/`Patch`/`Navigate` there.
+
+- Behaviour functions make exactly one `Flow.Run` and return a typed value or raise `Error()`.
+
+- Handle errors centrally in `App.OnError`.
+
+- Only adopt a result if it is not blank, and don't `Set(g, Udf())` blindly.
+
+- Compare IDs with GUID constants.
+
+- Use AutoLayout with `FillPortions` and `LayoutMinWidth`, and test the phone layout.
+
+- Traps: `If` branch types must be compatible, a classic Toggle's `OnChange` fires on code changes, and wrong YAML node placement breaks Studio.
+
+- Gates: `check-pa-yaml.mjs`, `pac canvas validate`, then the App checker showing Formulas (0).
+
+- Keep Studio's format and don't hand-edit `Controls/*.json`.
+
+
+
+**`pa-yaml-editing.md`:** surgical edits, preserved line endings, and formulas written with `=` or `|-`.
+
+
+**Flows:**
+
+
+
+- Take the caller from `x-ms-user-id` and don't trust a client-supplied user.
+
+- Use a `{data, error}` response contract and remember that a green run proves nothing.
+
+- `retryPolicy: none` on mutations, and an explicit `timeZone`.
+
+
+
+**SQL:**
+
+
+
+- Always `THROW`, and use scalar parameters.
+
+- Use GUID IDs and lookup tables instead of string enums.
+
+- Add a concurrency token, and watch for NULL in string concatenation.
+
+- Mirror the nearest sibling, make the smallest change, and never rename deployed objects.
+
+- Dry-run in rolled-back transactions.
+
+
+
+**Testing and diagnosis:**
+
+
+
+- Test as a plain user, prove changes with data rather than screenshots, and restore what tests touched.
+
+- Reproduce a bug before fixing it.
+
+- Separate database time from connector time.
+
+- Read-only first, then report cause, evidence and owner.
+
+
+
+Some of (c) is tied to InTTrust's own conventions, such as the flow action naming and "no comments".
+
+
+Do you want me to turn (c) into a Copilot skill or `.github\copilot-instructions.md`? I'd leave out (a) and (b) beyond a short "suggest, don't do" note for (b).
