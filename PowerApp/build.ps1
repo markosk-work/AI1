@@ -82,7 +82,7 @@ $files = @{
 </ImportExportXml>
 "@
     'customizations.xml'                   = '<?xml version="1.0" encoding="utf-8"?><ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><Entities></Entities><Roles></Roles><Workflows></Workflows><FieldSecurityProfiles></FieldSecurityProfiles><Templates /><EntityMaps /><EntityRelationships /><OrganizationSettings /><optionsets /><CustomControls /><EntityDataProviders /><Languages><Language>1033</Language></Languages></ImportExportXml>'
-    "CanvasApps\$appName.xml"              = @"
+    "CanvasApps\$appName.meta.xml"              = @"
 <?xml version="1.0" encoding="utf-8"?>
 <CanvasApp>
   <Name>$appName</Name>
@@ -119,3 +119,4 @@ foreach ($f in Get-ChildItem "$out\sol" -Recurse -File) {
 }
 $za.Dispose()
 Write-Host "Created $zip"
+
