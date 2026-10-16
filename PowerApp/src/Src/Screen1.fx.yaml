@@ -10,10 +10,13 @@ Screen1 As screen:
         ZIndex: =1
 
     cmbEmployee As combobox:
-        DisplayFields: =["Full Name"]
+        DefaultSelectedItems: =Filter(Employees, false)
+        DisplayFields: =["Full Name", "Title"]
         Height: =40
-        Items: =Filter(Employees, StartsWith('Full Name', cmbEmployee.SearchText))
-        SearchFields: =["Full Name"]
+        Items: =Filter(Employees, StartsWith('Full Name', Self.SearchText) || StartsWith(Title, Self.SearchText))
+        OnChange: =Reset(comment)
+        SearchFields: =["Full Name", "Title"]
+        SearchItems: =Filter(Employees, StartsWith('Full Name', Self.SearchText) || StartsWith(Title, Self.SearchText))
         SelectMultiple: =false
         Width: =500
         X: =40
@@ -29,7 +32,7 @@ Screen1 As screen:
         ZIndex: =3
 
     comment As text:
-        Default: =If(IsBlank(cmbEmployee.Selected), "", cmbEmployee.Selected.comment)
+        Default: =If(IsBlank(cmbEmployee.Selected), "", Coalesce(LookUp(Employees, ID = cmbEmployee.Selected.ID).comment, ""))
         Height: =40
         HintText: ="Write a comment"
         Width: =500

@@ -9,6 +9,7 @@ Add-PnPField -List 'Employees' -DisplayName 'Full Name' -InternalName 'Full_x002
 Add-PnPField -List 'Employees' -DisplayName 'comment' -InternalName 'comment' -Type Note -AddToDefaultView | Out-Null
 # Index + unique + required BEFORE loading data (a list over 5000 items cannot be indexed afterwards)
 Set-PnPField -List 'Employees' -Identity 'Full_x0020_Name' -Values @{ Indexed = $true; EnforceUniqueValues = $true; Required = $true }
+Set-PnPField -List 'Employees' -Identity 'Title' -Values @{ Indexed = $true }
 
 $batch = New-PnPBatch
 for ($i = 1; $i -le $Count; $i++) {
